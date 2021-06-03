@@ -51,6 +51,10 @@ void SimpleMaxFlow::SetArcCapacity(ArcIndex arc, FlowQuantity capacity) {
   arc_capacity_[arc] = capacity;
 }
 
+template <typename Graph>
+const FlowQuantity GenericMaxFlow<Graph>::kMaxFlowQuantity =
+    std::numeric_limits<FlowQuantity>::max();
+
 SimpleMaxFlow::Status SimpleMaxFlow::Solve(NodeIndex source, NodeIndex sink) {
   const ArcIndex num_arcs = arc_capacity_.size();
   arc_flow_.assign(num_arcs, 0);
@@ -922,10 +926,6 @@ template <typename Graph>
 bool GenericMaxFlow<Graph>::IsArcValid(ArcIndex arc) const {
   return Graphs<Graph>::IsArcValid(*graph_, arc);
 }
-
-template <typename Graph>
-const FlowQuantity GenericMaxFlow<Graph>::kMaxFlowQuantity =
-    std::numeric_limits<FlowQuantity>::max();
 
 template <typename Graph>
 template <bool reverse>
